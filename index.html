@@ -73,15 +73,8 @@
                       <md-content class="md-padding">
                         <h1 class="md-display-2">Search Data By</h1>
 
-                            <ui-select ng-model="selected.value">
-                                <ui-select-match>
-                                    <span ng-bind="$select.selected"></span>
-                                </ui-select-match>
-                                <ui-select-choices repeat="item in (initData.BIAS_DESC1 | filter: $select.search) track by $index">
-                                    <span ng-bind="item"></span>
-                                </ui-select-choices>
-                            </ui-select>
                             
+
                             <h2 class="section-title">
                                 What 
                                 <i class="toggle-open fa {{viewToggles.what? 'fa-minus' : 'fa-plus'}}" 
@@ -94,8 +87,16 @@
                                     <ul ng-show="data.BIAS_DESC.length > 0"> 
                                         <li ng-repeat="item in data.BIAS_DESC track by $index"> {{item}}</li>
                                     </ul>
-                                    <select ng-model="buff.BIAS_DESC" ng-options="item for item in initData.BIAS_DESC">
-                                    </select>
+                                    <ui-select ng-model="buff.BIAS_DESC">
+                                        <ui-select-match>
+                                            <span ng-bind="$select.selected"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in (initData.BIAS_DESC | filter: $select.search) track by $index">
+                                            <span ng-bind="item"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                   <!--  <select ng-model="buff.BIAS_DESC" ng-options="item for item in initData.BIAS_DESC">
+                                    </select> -->
                                     <button class="btn" ng-click="addParam('BIAS_DESC')">Add</button>
                                     <button class="btn" ng-click="clearParam('BIAS_DESC')">Clear</button>
                                 </div>
@@ -104,7 +105,15 @@
                                     <ul ng-show="data.OFFENSE_NAME.length > 0"> 
                                         <li ng-repeat="item in data.OFFENSE_NAME track by $index"> {{item}}</li>
                                     </ul>
-                                    <select ng-model="buff.OFFENSE_NAME" ng-options="item for item in initData.OFFENSE_NAME">
+                                    <ui-select ng-model="buff.OFFENSE_NAME">
+                                        <ui-select-match>
+                                            <span ng-bind="$select.selected"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in (initData.OFFENSE_NAME | filter: $select.search) track by $index">
+                                            <span ng-bind="item"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <!-- <select ng-model="buff.OFFENSE_NAME" ng-options="item for item in initData.OFFENSE_NAME"> -->
                                     </select>
                                     <button class="btn" ng-click="addParam('OFFENSE_NAME')">Add</button>
                                     <button class="btn" ng-click="clearParam('OFFENSE_NAME')">Clear</button>
@@ -122,7 +131,15 @@
                                     <ul ng-show="data.STATE_NAME.length > 0"> 
                                         <li ng-repeat="item in data.STATE_NAME track by $index"> {{item}} </li>
                                     </ul>
-                                    <select ng-model="buff.STATE_NAME" ng-options="item for item in initData.STATE_NAME">
+                                    <ui-select ng-model="buff.STATE_NAME">
+                                        <ui-select-match>
+                                            <span ng-bind="$select.selected"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in (initData.STATE_NAME | filter: $select.search) track by $index">
+                                            <span ng-bind="item"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                      <!--               <select ng-model="buff.STATE_NAME" ng-options="item for item in initData.STATE_NAME"> -->
                                     </select>
                                     <button class="btn" ng-click="addParam('STATE_NAME')">Add</button>
                                     <button class="btn" ng-click="clearParam('STATE_NAME')">Clear</button>
@@ -132,7 +149,15 @@
                                     <ul ng-show="data.LOCATION_NAME.length > 0"> 
                                         <li ng-repeat="item in data.LOCATION_NAME track by $index"> {{item}} </li>
                                     </ul>
-                                    <select ng-model="buff.LOCATION_NAME" ng-options="item for item in initData.LOCATION_NAME">
+                                    <ui-select ng-model="buff.LOCATION_NAME">
+                                        <ui-select-match>
+                                            <span ng-bind="$select.selected"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in (initData.LOCATION_NAME | filter: $select.search) track by $index">
+                                            <span ng-bind="item"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <!-- <select ng-model="buff.LOCATION_NAME" ng-options="item for item in initData.LOCATION_NAME"> -->
                                     </select>
                                     <button class="btn" ng-click="addParam('LOCATION_NAME')">Add</button>
                                     <button class="btn" ng-click="clearParam('LOCATION_NAME')">Clear</button>
@@ -142,7 +167,15 @@
                                     <ul ng-show="data.AGENCY_TYPE_NAME.length > 0"> 
                                         <li ng-repeat="item in data.AGENCY_TYPE_NAME track by $index"> {{item}} </li>
                                     </ul>
-                                    <select ng-model="buff.AGENCY_TYPE_NAME" ng-options="item for item in initData.AGENCY_TYPE_NAME">
+                                    <ui-select ng-model="buff.AGENCY_TYPE_NAME">
+                                        <ui-select-match>
+                                            <span ng-bind="$select.selected"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in (initData.AGENCY_TYPE_NAME | filter: $select.search) track by $index">
+                                            <span ng-bind="item"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <!-- <select ng-model="buff.AGENCY_TYPE_NAME" ng-options="item for item in initData.AGENCY_TYPE_NAME"> -->
                                     </select>
                                     <button class="btn" ng-click="addParam('AGENCY_TYPE_NAME')">Add</button>
                                     <button class="btn" ng-click="clearParam('AGENCY_TYPE_NAME')">Clear</button>
@@ -152,7 +185,15 @@
                                     <ul ng-show="data.POPULATION_GROUP_DESC.length > 0"> 
                                         <li ng-repeat="item in data.POPULATION_GROUP_DESC track by $index"> {{item}} </li>
                                     </ul>
-                                    <select ng-model="buff.POPULATION_GROUP_DESC" ng-options="item for item in initData.POPULATION_GROUP_DESC">
+                                    <ui-select ng-model="buff.POPULATION_GROUP_DESC">
+                                        <ui-select-match>
+                                            <span ng-bind="$select.selected"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in (initData.POPULATION_GROUP_DESC | filter: $select.search) track by $index">
+                                            <span ng-bind="item"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <!-- <select ng-model="buff.POPULATION_GROUP_DESC" ng-options="item for item in initData.POPULATION_GROUP_DESC"> -->
                                     </select>
                                     <button class="btn" ng-click="addParam('POPULATION_GROUP_DESC')">Add</button>
                                     <button class="btn" ng-click="clearParam('POPULATION_GROUP_DESC')">Clear</button>
@@ -171,8 +212,16 @@
                                     <ul ng-show="data.VICTIM_TYPES.length > 0"> 
                                         <li ng-repeat="item in data.VICTIM_TYPES track by $index"> {{item}} </li>
                                     </ul>
-                                    <select ng-model="buff.VICTIM_TYPES" ng-options="item for item in initData.VICTIM_TYPES">
-                                    </select>
+                                    <ui-select ng-model="buff.VICTIM_TYPES">
+                                        <ui-select-match>
+                                            <span ng-bind="$select.selected"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in (initData.VICTIM_TYPES | filter: $select.search) track by $index">
+                                            <span ng-bind="item"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <!-- <select ng-model="buff.VICTIM_TYPES" ng-options="item for item in initData.VICTIM_TYPES">
+                                    </select> -->
                                     <button class="btn" ng-click="addParam('VICTIM_TYPES')">Add</button>
                                     <button class="btn" ng-click="clearParam('VICTIM_TYPES')">Clear</button>
                                 </div>
@@ -181,7 +230,15 @@
                                     <ul ng-show="data.OFFENDER_RACE.length > 0"> 
                                         <li ng-repeat="item in data.OFFENDER_RACE track by $index"> {{item}} </li>
                                     </ul>
-                                    <select ng-model="buff.OFFENDER_RACE" ng-options="item for item in initData.OFFENDER_RACE">
+                                    <ui-select ng-model="buff.OFFENDER_RACE">
+                                        <ui-select-match>
+                                            <span ng-bind="$select.selected"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in (initData.OFFENDER_RACE | filter: $select.search) track by $index">
+                                            <span ng-bind="item"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <!-- <select ng-model="buff.OFFENDER_RACE" ng-options="item for item in initData.OFFENDER_RACE"> -->
                                     </select>
                                     <button class="btn" ng-click="addParam('OFFENDER_RACE')">Add</button>
                                     <button class="btn" ng-click="clearParam('OFFENDER_RACE')">Clear</button>
@@ -192,8 +249,16 @@
                                     <ul ng-show="data.OFFENDER_ETHNICITY.length > 0"> 
                                         <li ng-repeat="item in data.OFFENDER_ETHNICITY track by $index"> {{item}} </li>
                                     </ul>
-                                    <select ng-model="buff.OFFENDER_ETHNICITY" ng-options="item for item in initData.OFFENDER_ETHNICITY">
-                                    </select>
+                                    <ui-select ng-model="buff.OFFENDER_ETHNICITY">
+                                        <ui-select-match>
+                                            <span ng-bind="$select.selected"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in (initData.OFFENDER_ETHNICITY | filter: $select.search) track by $index">
+                                            <span ng-bind="item"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <!-- <select ng-model="buff.OFFENDER_ETHNICITY" ng-options="item for item in initData.OFFENDER_ETHNICITY">
+                                    </select> -->
                                     <button class="btn" ng-click="addParam('OFFENDER_ETHNICITY')">Add</button>
                                     <button class="btn" ng-click="clearParam('OFFENDER_ETHNICITY')">Clear</button>
                                 </div>

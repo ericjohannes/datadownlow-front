@@ -87,14 +87,13 @@ app.controller('main', function($scope, $http) {
         // console.log(response.data.COLUMN_NAME)
         // console.log(JSON.parse(response.data));
         $scope.initData = response.data;
-        $scope.initData['BIAS_DESC1'] = objectToArray($scope.initData.BIAS_DESC);
-        console.log($scope.initData.BIAS_DESC1);
 
-        // $scope.BIAS_DESC = Object.values($scope.initData.BIAS_DESC);
-
-        // $scope.selected = {value: $scope.initData.BIAS_DESC[0]};
-
-        // console.log($scope.columnNames);
+        // converts each obj to an array, which we need for ui-select
+        Object.keys($scope.initData).forEach(function(key) {
+            $scope.initData[key] = objectToArray($scope.initData[key]) ;
+        });
+        // $scope.initData['BIAS_DESC'] = objectToArray($scope.initData.BIAS_DESC);
+        console.log($scope.initData.BIAS_DESC);
     });
 
   $scope.showTable = true;
