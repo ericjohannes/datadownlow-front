@@ -80,7 +80,7 @@ app.controller('main', function($scope, $http) {
 
   $http({
       method: "POST",
-      url: "../../cgi-bin/datadownlow/api",
+      url: "../../cgi-bin/dev-datadownlow/api",
       data: "data=" + postData,
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).then(function(response) {
@@ -104,7 +104,13 @@ app.controller('main', function($scope, $http) {
     });
     return obj
   };
-    
+
+  // $scope.haveData = checkData();
+
+  // $scope.checkData = function() {
+  //   return typeof $scope.data != undefined
+  // }
+  $scope.checkData = true;
 
   $scope.getData = function (){
     $scope.showTable = true;
@@ -114,7 +120,7 @@ app.controller('main', function($scope, $http) {
     console.log($scope.data);
     $http({
       method: "POST",
-      url: "../../cgi-bin/datadownlow/api",
+      url: "../../cgi-bin/dev-datadownlow/api",
       data: "data=" + postData,
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).then(function(response) {
@@ -125,8 +131,9 @@ app.controller('main', function($scope, $http) {
           method: "POST",
           url: $scope.fileName
         }).then(function(response) {
-                
-          $scope.data = $.csv.toArrays(response.data);
+                    // $scope.data = $.csv.
+          $scope.data = $.csv.toObjects(response.data);
+          $scope.checkData = false;
 
           console.log($scope.data);
         	
