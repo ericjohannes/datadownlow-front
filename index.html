@@ -274,11 +274,65 @@
 
                         </md-content>
                     </md-tab>
-                    <md-tab label="table">
+                    <md-tab label="table" ng-disabled="checkData">
                         <md-content class="md-padding">
                             <h1 ng-show="showTable"><a download="data.csv" ng-href="{{ fileName }}">Download Data</a></h1>
+
+                            <table class="table table-striped table-bordered dataTable" ng-rows="data">
+                                <thead>
+                                    <tr>
+                                        <!-- it'd be great if this worked -->
+                                        <!-- <th ng-repeat="key in Object.keys(data[0])">{{key}}</th> -->
+                                        <th >INCIDENT_ID</th>
+                                        <th >INCIDENT_NO</th>
+                                        <th>BIAS_DESC</th>
+                                        <th>OFFENSE_NAME</th>
+                                        <th >DATA_YEAR</th>
+                                        <th >INCIDENT_DATE</th>
+                                        <th >ORI</th>
+                                        <th >PUB_AGENCY_NAME</th>
+                                        <th >PUB_AGENCY_UNIT</th>
+                                        <th >AGENCY_TYPE_NAME</th>
+                                        <th>POPULATION_GROUP_DESC</th>
+                                        <th> STATE_NAME</th>
+                                        <th >LOCATION_NAME</th>
+                                        <th >OFFENDER_ETHNICITY</th>
+                                        <th >OFFENDER_RACE</th>
+
+                                        <th >TOTAL_OFFENDER_COUNT</th>
+                                        <th >TOTAL_INDIVIDUAL_VICTIMS</th>
+                                        <th> VICTIM_COUNT</th>
+                                        <th> VICTIM_TYPES: </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-row >
+                                        <!-- it'd be great if this worked -->
+                                        <!-- <th ng-repeat="key in Object.keys(row)">{{row[key]}}</th> -->
+                                        <th>{{row.INCIDENT_ID}}</th>
+                                        <th>{{row.INCIDENT_NO}}</th>
+                                        <th>{{row.BIAS_DESC}}</th>
+                                        <th>{{row.OFFENSE_NAME}}</th>
+                                        <th>{{row.DATA_YEAR}}</th>
+                                        <th>{{row.INCIDENT_DATE}}</th>
+                                        <th>{{row.ORI}}</th>
+                                        <th>{{row.PUB_AGENCY_NAME}}</th>
+                                        <th>{{row.PUB_AGENCY_UNIT}}</th>
+                                        <th>{{row.AGENCY_TYPE_NAME}}</th>
+                                        <th>{{row.POPULATION_GROUP_DESC}}</th>
+                                        <th>{{row.STATE_NAME}}</th>
+                                        <th>{{row.LOCATION_NAME}}</th>
+                                        <th>{{row.OFFENDER_ETHNICITY}}</th>
+                                        <th>{{row.OFFENDER_RACE}}</th>
+                                        <th>{{row.TOTAL_OFFENDER_COUNT}}</th>
+                                        <th>{{row.TOTAL_INDIVIDUAL_VICTIMS}}</th>
+                                        <th>{{row.VICTIM_COUNT}}</th>
+                                        <th>{{row.VICTIM_TYPES}}</th>
+                                    </tr>
+                                </tbody>
+                            </table>
                             
-                            <table ng-show="showTable">
+                            <!-- <table ng-show="showTable">
                                 <thead>
                                     <tr>
                                         <th ng-repeat="item in data[0]" >{{item}}</th>
@@ -289,7 +343,7 @@
                                         <td ng-repeat="item in row track by $index">{{item}}</td>
                                     </tr>
                                 </tbody>
-                            </table>
+                            </table> -->
                         </md-content>
                     </md-tab>
     	            <md-tab label="viz" ng-disabled="vizImplemented">
