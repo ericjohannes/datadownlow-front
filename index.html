@@ -144,6 +144,27 @@
                                     <button class="btn" ng-click="addParam('STATE_NAME')">Add</button>
                                     <button class="btn" ng-click="clearParam('STATE_NAME')">Clear</button>
                                 </div>
+
+                                 <!-- this next part works but is super slow. why? it all works though!!! -->
+                                <div class="add-param">
+                                    <h3>Agency Name</h3>
+                                    <ul ng-show="data.PUB_AGENCY_NAME.length > 0"> 
+                                        <li ng-repeat="item in data.PUB_AGENCY_NAME track by $index"> {{item}} </li>
+                                    </ul>
+                                    <ui-select ng-model="buff.PUB_AGENCY_NAME">
+                                        <ui-select-match>
+                                            <span ng-bind="$select.selected"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in (initData.PUB_AGENCY_NAME | filter: $select.search) track by $index">
+                                            <span ng-bind="item"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    
+                                    
+                                    <button class="btn" ng-click="addParam('PUB_AGENCY_NAME')">Add</button>
+                                    <button class="btn" ng-click="clearParam('PUB_AGENCY_NAME')">Clear</button>
+                                </div>
+
                                 <div class="add-param">
                                     <h3>Location Name</h3>
                                     <ul ng-show="data.LOCATION_NAME.length > 0"> 
@@ -350,6 +371,26 @@
                         <md-content class="md-padding">
                             <h1 class="md-display-2">Vizualize Data</h1>
                             <p>Working on it</p>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="about">
+                        <md-content class="md-padding">
+                            <h1 class="md-display-2">About</h1>
+                            <h2>Basics</h2>
+                            <div>
+                                <p>This tool lets you search and download reports of hate crimes, or crimes motivated by a bias. The reports are from law enforcement agencies around the U.S. who sent the data to the FBI.</p>
+                                <p>It is still under development.</p>
+                                <p>The data came from <a href="https://crime-data-explorer.fr.cloud.gov/downloads-and-docs">the FBI</a>. 
+                                <p>This project set up a sever to host the data and to let users search and filter it with an online interface.</p>
+                            </div>
+                            <div>
+                                <h2>Use</h2>
+                                <p>Choose the parameters to search by, click "get data." Then you can view the data in the "table" tab. There, you can also find a link to download the slice of data you selected.</p>
+                            </div>
+                            <div>
+                                <h2>More Backgorund</h2>
+                                <p>The reports are part of the Summary Reporting System or National Incident-Based Reporting System. The data covers the years 1991-2017. Not all law enforcement departments these types of reports, and even fewer will have data for all of the years. Caution is warranted when drawing conclusions from this data.</p>
+                            </div>
                         </md-content>
                     </md-tab>
                 </md-tabs>

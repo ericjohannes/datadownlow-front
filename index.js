@@ -14,7 +14,7 @@ app.controller('main', function($scope, $http) {
   */
 
   // data from inputs
-  function initArrays(){
+ function initArrays(){
     $scope.buff = { AGENCY_TYPE_NAME: '', 
                     BIAS_DESC: '', 
                     LOCATION_NAME: '', 
@@ -24,6 +24,9 @@ app.controller('main', function($scope, $http) {
                     POPULATION_GROUP_DESC: '',
                     STATE_NAME: '',
                     VICTIM_TYPES: '',
+                    PUB_AGENCY_NAME: '',
+                    PUB_AGENCY_UNIT: '',
+                    DATA_YEAR: '',
                   };
 
     // data to send to API
@@ -35,7 +38,10 @@ app.controller('main', function($scope, $http) {
                     OFFENSE_NAME: [],
                     POPULATION_GROUP_DESC: [],
                     STATE_NAME: [],
-                    VICTIM_TYPES: []
+                    VICTIM_TYPES: [],
+                    PUB_AGENCY_NAME: [],
+                    PUB_AGENCY_UNIT: [],
+                    DATA_YEAR: [],
                   };
   }
   initArrays();
@@ -80,7 +86,7 @@ app.controller('main', function($scope, $http) {
 
   $http({
       method: "POST",
-      url: "../../cgi-bin/dev-datadownlow/api",
+      url: "../../cgi-bin/datadownlow/api",
       data: "data=" + postData,
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).then(function(response) {
@@ -93,7 +99,7 @@ app.controller('main', function($scope, $http) {
             $scope.initData[key] = objectToArray($scope.initData[key]) ;
         });
         // $scope.initData['BIAS_DESC'] = objectToArray($scope.initData.BIAS_DESC);
-        console.log($scope.initData.BIAS_DESC);
+        console.log($scope.initData.PUB_AGENCY_NAME);
     });
 
   $scope.showTable = true;
@@ -120,7 +126,7 @@ app.controller('main', function($scope, $http) {
     console.log($scope.data);
     $http({
       method: "POST",
-      url: "../../cgi-bin/dev-datadownlow/api",
+      url: "../../cgi-bin/datadownlow/api",
       data: "data=" + postData,
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).then(function(response) {
