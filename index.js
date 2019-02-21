@@ -24,6 +24,8 @@ app.controller('main', function($scope, $http) {
                     POPULATION_GROUP_DESC: '',
                     STATE_NAME: '',
                     VICTIM_TYPES: '',
+                    START_DATE:'',
+                    END_DATE:'',
                   };
 
     // data to send to API
@@ -35,7 +37,9 @@ app.controller('main', function($scope, $http) {
                     OFFENSE_NAME: [],
                     POPULATION_GROUP_DESC: [],
                     STATE_NAME: [],
-                    VICTIM_TYPES: []
+                    VICTIM_TYPES: [],
+                    START_DATE:'',
+                    END_DATE:'',
                   };
   }
   initArrays();
@@ -132,10 +136,10 @@ app.controller('main', function($scope, $http) {
           url: $scope.fileName
         }).then(function(response) {
                     // $scope.data = $.csv.
-          $scope.data = $.csv.toObjects(response.data);
+          $scope.responseData = $.csv.toObjects(response.data);
           $scope.checkData = false;
 
-          console.log($scope.data);
+          console.log($scope.responseData);
         	
         });	
     });

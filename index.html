@@ -76,7 +76,7 @@
                             
 
                             <h2 class="section-title">
-                                What 
+                                Basics 
                                 <i class="toggle-open fa {{viewToggles.what? 'fa-minus' : 'fa-plus'}}" 
                                    aria-hidden="true" 
                                    ng-click="toggleOpen('what')"></i>
@@ -97,6 +97,7 @@
                                     </ui-select>
                                    <!--  <select ng-model="buff.BIAS_DESC" ng-options="item for item in initData.BIAS_DESC">
                                     </select> -->
+
                                     <button class="btn" ng-click="addParam('BIAS_DESC')">Add</button>
                                     <button class="btn" ng-click="clearParam('BIAS_DESC')">Clear</button>
                                 </div>
@@ -117,6 +118,22 @@
                                     </select>
                                     <button class="btn" ng-click="addParam('OFFENSE_NAME')">Add</button>
                                     <button class="btn" ng-click="clearParam('OFFENSE_NAME')">Clear</button>
+                                </div>
+                                <div class="add-param">
+                                    <h3>Incident Date</h3>
+                                    <div class="two-inputs">
+                                        <label><h4>After {{data.START_DATE}}</h4>
+                                            <input type="date" ng-model="buff.START_DATE">
+                                        </label>
+                                        <button class="btn" ng-click="data.START_DATE = buff.START_DATE">Add</button>
+                                        <button class="btn" ng-click="data.START_DATE = ''">Clear</button>
+                                        <label><h4>Before {{data.END_DATE}}</h4>
+                                            <input type="date" ng-model="buff.END_DATE">
+                                        </label>
+                                        <button class="btn" ng-click="data.END_DATE = buff.END_DATE">Add</button>
+                                        <button class="btn" ng-click="data.END_DATE = ''">Clear</button>
+                                    </div>
+
                                 </div>
                             </div>
                             <h2 class="section-title">
@@ -278,7 +295,7 @@
                         <md-content class="md-padding">
                             <h1 ng-show="showTable"><a download="data.csv" ng-href="{{ fileName }}">Download Data</a></h1>
 
-                            <table class="table table-striped table-bordered dataTable" ng-rows="data">
+                            <table class="table table-striped table-bordered dataTable" ng-rows="responseData">
                                 <thead>
                                     <tr>
                                         <!-- it'd be great if this worked -->
@@ -350,6 +367,26 @@
                         <md-content class="md-padding">
                             <h1 class="md-display-2">Vizualize Data</h1>
                             <p>Working on it</p>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="about">
+                        <md-content class="md-padding">
+                            <h1 class="md-display-2">About</h1>
+                            <h2>Basics</h2>
+                            <div>
+                                <p>This tool lets you search and download reports of hate crimes, or crimes motivated by a bias. The reports are from law enforcement agencies around the U.S. who sent the data to the FBI.</p>
+                                <p>It is still under development.</p>
+                                <p>The data came from <a href="https://crime-data-explorer.fr.cloud.gov/downloads-and-docs">the FBI</a>. 
+                                <p>This project set up a sever to host the data and to let users search and filter it with an online interface.</p>
+                            </div>
+                            <div>
+                                <h2>Use</h2>
+                                <p>Choose the parameters to search by, click "get data." Then you can view the data in the "table" tab. There, you can also find a link to download the slice of data you selected.</p>
+                            </div>
+                            <div>
+                                <h2>More Backgorund</h2>
+                                <p>The reports are part of the Summary Reporting System or National Incident-Based Reporting System. The data covers the years 1991-2017. Not all law enforcement departments these types of reports, and even fewer will have data for all of the years. Caution is warranted when drawing conclusions from this data.</p>
+                            </div>
                         </md-content>
                     </md-tab>
                 </md-tabs>

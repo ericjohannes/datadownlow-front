@@ -36,3 +36,10 @@ div.controls button.btn {
 div.controls button.btn:first-child {
     margin-left: 5px;
 }
+
+div.two-inputs input {
+    display: block;
+}
+div.two-inputs label {
+    width: 45%;
+}
