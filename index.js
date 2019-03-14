@@ -1,16 +1,16 @@
-var app = angular.module('app', ['ngRows','ngMaterial', 'ngMessages', 'material.svgAssetsCache', 'ui.select', 'ngSanitize']);
-app.controller('main', function($scope, $http) {
+var app = angular.module('app', ['ngRows','ngMaterial', 'ngMessages', 'material.svgAssetsCache', 'ui.select', 'ngSanitize','datatables']);
+app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTColumnBuilder) {
   $scope.vizImplemented = true;
   $scope.showTable = false;
   $scope.columnNames = [];
-
+  // check if this is here
   // TODO:
   /*load select distinct PUB_AGENCY_NAME/PUB_AGENCY_UNIT/DATA_YEAR from hate_crime1
     add to API to support all three
     make select box for DATA_YEAR or else number input restricted to available years
-    implement typeaheads for pub agency name and pub agency unit
-    implement typeaheads for other relevant categories
-    add date inputs, add to API to support before and after dates
+    implement typeaheads for pub agency name and pub agency unit DONE
+    implement typeaheads for other relevant categories DONE
+    add date inputs, add to API to support before and after dates DONE
   */
 
   // data from inputs
@@ -26,6 +26,7 @@ app.controller('main', function($scope, $http) {
                     VICTIM_TYPES: '',
                     START_DATE:'',
                     END_DATE:'',
+                    COLUMN_NAME: undefined,
                   };
 
     // data to send to API
@@ -40,6 +41,7 @@ app.controller('main', function($scope, $http) {
                     VICTIM_TYPES: [],
                     START_DATE:'',
                     END_DATE:'',
+                    COLUMN_NAME: undefined,
                   };
   }
   initArrays();
@@ -60,14 +62,21 @@ app.controller('main', function($scope, $http) {
     if($scope.buff[type].length >0 ){
       $scope.data[type].push($scope.buff[type]);
     }
-    console.log($scope.data[type]);
-    console.log($scope.data[type].length);
   }
+
   $scope.clearParam = function(type){
     
     $scope.data[type] = [];
-    console.log($scope.data[type]);
-    console.log($scope.data[type].length);
+   
+  }
+  $scope.setParam = function(type){
+    if($scope.buff[type].length >0 ){
+      $scope.data[type] = $scope.buff[type];
+    }   
+  }
+  $scope.unsetParam = function(type){
+    $scope.data[type] = undefined; 
+    console.log('unset');
   }
 
   $scope.reset = function(){
@@ -96,8 +105,9 @@ app.controller('main', function($scope, $http) {
         Object.keys($scope.initData).forEach(function(key) {
             $scope.initData[key] = objectToArray($scope.initData[key]) ;
         });
+        $scope.initData['COLUMN_NAME'].push('INCIDENT_YEAR')
         // $scope.initData['BIAS_DESC'] = objectToArray($scope.initData.BIAS_DESC);
-        console.log($scope.initData.BIAS_DESC);
+        // console.log($scope.initData);
     });
 
   $scope.showTable = true;
@@ -118,10 +128,15 @@ app.controller('main', function($scope, $http) {
 
   $scope.getData = function (){
     $scope.showTable = true;
-    $scope.data.type = 'filter';
-
+    // console.log($scope.data.COLUMN_NAME);
+    if(typeof $scope.data.COLUMN_NAME != 'undefined' && $scope.data.COLUMN_NAME.length > 0){
+      $scope.data.type = 'sum';
+    } else {
+      $scope.data.type = 'filter';
+    }
+    
     var postData = JSON.stringify($scope.data);
-    console.log($scope.data);
+    // console.log($scope.data);
     $http({
       method: "POST",
       url: "../../cgi-bin/dev-datadownlow/api",
@@ -135,18 +150,78 @@ app.controller('main', function($scope, $http) {
           method: "POST",
           url: $scope.fileName
         }).then(function(response) {
-                    // $scope.data = $.csv.
-          $scope.responseData = $.csv.toObjects(response.data);
+          // success(function(data){      
+          // trying this http://plnkr.co/edit/TzBaaZ2Msd9WchfLDLkN?p=preview
+          var data = $.csv.toObjects(response.data);
+          var sample = data[0], dtColumns = []
+          
+          for (var key in sample) {
+            dtColumns.push(
+              DTColumnBuilder.newColumn(key).withTitle(key)
+            );
+          }
+          $scope.dtColumns = dtColumns
+          $scope.dtOptions = DTOptionsBuilder.newOptions()
+            .withOption('data', data)
+            .withOption('dataSrc', '')          
+     
+          angular.element('#main-table').attr('datatable', '')
+          $compile(angular.element('#main-table'))($scope)
+
           $scope.checkData = false;
 
-          console.log($scope.responseData);
-        	
-        });	
+          // // save for later, it works
+          // // $scope.data = $.csv.
+          // $scope.responseData = $.csv.toObjects(response.data);
+          // $scope.checkData = false;
+          // console.log($scope.responseData);
+          // getColumns($scope.responseData[0]);
+
+          // setTimeout(function(){
+          //   $scope.makeTable();
+          // }, 10000);
+          // // $(document).ready(function() {
+          // //   $('#main-table').DataTable();
+          // // });
+        }); 
     });
   }
+
+  // this works, it just needs to be called after the table is created
+  // $scope.makeTable = function(){
+  //   $(document).ready(function() {
+  //           $('#main-table').DataTable();
+  //         });
+  // }
+
+  $scope.tableColumns = [];
+  function getColumns(object){
+    $scope.tableColumns = [];
+    Object.keys(object).forEach(function(key) {
+            $scope.tableColumns.push(key);
+    });
+    // console.log($scope.tableColumns)
+    
+  }
+
+  // $scope.testFunction = function (){
+  //   console.log('repeat done');
+  // }
 
       
 
 
 
+});
+
+// https://coderwall.com/p/5dpe2w/execute-function-when-ngrepeat-done
+// can't get this to work
+app.directive('repeatDone', function() {
+  return function($scope, element, attrs) {
+    element.bind('$destroy', function(event) {
+      if ($scope.$last) {
+        $scope.$eval(attrs.repeatDone);
+      }
+    });
+  }
 });

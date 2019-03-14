@@ -1,0 +1,13 @@
+/* Hide angular formatting at start */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+
+body {
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+body, table, button, input, select, textarea {
+    font-size: 18px;
+}
