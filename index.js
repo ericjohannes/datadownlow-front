@@ -3,6 +3,7 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
   $scope.vizImplemented = true;
   $scope.showTable = false;
   $scope.columnNames = [];
+  $scope.vizFlag = false;
   // check if this is here
   // TODO:
   /*load select distinct PUB_AGENCY_NAME/PUB_AGENCY_UNIT/DATA_YEAR from hate_crime1
