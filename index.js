@@ -27,6 +27,8 @@ app.controller('main', function($scope, $http) {
                     PUB_AGENCY_NAME: '',
                     PUB_AGENCY_UNIT: '',
                     DATA_YEAR: '',
+                    START_DATE:'',
+                    END_DATE:'',
                   };
 
     // data to send to API
@@ -42,6 +44,8 @@ app.controller('main', function($scope, $http) {
                     PUB_AGENCY_NAME: [],
                     PUB_AGENCY_UNIT: [],
                     DATA_YEAR: [],
+                    START_DATE:'',
+                    END_DATE:'',
                   };
   }
   initArrays();

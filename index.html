@@ -76,7 +76,7 @@
                             
 
                             <h2 class="section-title">
-                                What 
+                                Basics 
                                 <i class="toggle-open fa {{viewToggles.what? 'fa-minus' : 'fa-plus'}}" 
                                    aria-hidden="true" 
                                    ng-click="toggleOpen('what')"></i>
@@ -117,6 +117,22 @@
                                     </select>
                                     <button class="btn" ng-click="addParam('OFFENSE_NAME')">Add</button>
                                     <button class="btn" ng-click="clearParam('OFFENSE_NAME')">Clear</button>
+                                </div>
+                                <div class="add-param">
+                                    <h3>Incident Date</h3>
+                                    <div class="two-inputs">
+                                        <label><h4>After {{data.START_DATE.toLocaleDateString("en-US")}}</h4>
+                                            <input type="date" ng-model="buff.START_DATE">
+                                        </label>
+                                        <button class="btn" ng-click="data.START_DATE = buff.START_DATE">Add</button>
+                                        <button class="btn" ng-click="data.START_DATE = ''">Clear</button>
+                                        <label><h4>Before {{data.END_DATE.toLocaleDateString("en-US")}}</h4>
+                                            <input type="date" ng-model="buff.END_DATE">
+                                        </label>
+                                        <button class="btn" ng-click="data.END_DATE = buff.END_DATE">Add</button>
+                                        <button class="btn" ng-click="data.END_DATE = ''">Clear</button>
+                                    </div>
+
                                 </div>
                             </div>
                             <h2 class="section-title">
