@@ -338,7 +338,7 @@
                                 </tbody>
                             </table> -->
                             <!-- <button ng-click="makeTable()">CLICK!</button> -->
-                            <table id="main-table" dt-options="dtOptions" dt-columns="dtColumns" ></table>
+                            <table id="main-table" ng-if="columnsReady" datatable="" dt-instance="dtInstance" dt-options="dtOptions" dt-columns="dtColumns" ></table>
 
                             <!-- <table id="main-table">
                                 <thead>

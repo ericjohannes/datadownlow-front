@@ -4,6 +4,8 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
   $scope.showTable = false;
   $scope.columnNames = [];
   $scope.vizFlag = false;
+  $scope.dtInstance = {};
+  $scope.columnsReady = false;
   // check if this is here
   // TODO:
   /*load select distinct PUB_AGENCY_NAME/PUB_AGENCY_UNIT/DATA_YEAR from hate_crime1
@@ -121,13 +123,17 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
     return obj
   };
 
-  // $scope.haveData = checkData();
-
-  // $scope.checkData = function() {
-  //   return typeof $scope.data != undefined
-  // }
   $scope.checkData = true;
 
+  $scope.destroy = function() {
+    $scope.dtInstance.DataTable.ngDestroy();
+    var i, ths = document.querySelectorAll('#main-table th');
+       for (i=0;i<ths.length;i++) {
+          ths[i].removeAttribute('style'); 
+       }
+    }
+
+ 
   $scope.getData = function (){
     $scope.showTable = true;
     // console.log($scope.data.COLUMN_NAME);
@@ -136,25 +142,24 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
     } else {
       $scope.data.type = 'filter';
     }
+    console.log($scope.data);
     
     var postData = JSON.stringify($scope.data);
-    // console.log($scope.data);
     $http({
       method: "POST",
       url: "../../cgi-bin/dev-datadownlow/api",
       data: "data=" + postData,
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).then(function(response) {
+        $scope.columnsReady = false;
         $scope.fileName = response.data;
-        // console.log($scope.fileName);
-
         $http({
           method: "POST",
           url: $scope.fileName
         }).then(function(response) {
-          // success(function(data){      
           // trying this http://plnkr.co/edit/TzBaaZ2Msd9WchfLDLkN?p=preview
-          var data = $.csv.toObjects(response.data);
+          var data = undefined;
+          data = $.csv.toObjects(response.data);
           var sample = data[0], dtColumns = []
           
           for (var key in sample) {
@@ -162,22 +167,35 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
               DTColumnBuilder.newColumn(key).withTitle(key)
             );
           }
+          console.log(dtColumns);
+          $scope.dtColumns = undefined;
+          $scope.dtOptions = undefined;
+          // clear any table
+          if(typeof $scope.dtInstance.DataTable != 'undefined'){
+            // $scope.dtInstance.DataTable.destroy();
+            $scope.destroy();
+          }
+          
           $scope.dtColumns = dtColumns
           $scope.dtOptions = DTOptionsBuilder.newOptions()
             .withOption('data', data)
             .withOption('dataSrc', '')          
      
-          angular.element('#main-table').attr('datatable', '')
-          $compile(angular.element('#main-table'))($scope)
+          // angular.element('#main-table').attr('datatable', '')
+          // $compile(angular.element('#main-table'))($scope)
+
+          $scope.columnsReady = true;
 
           $scope.checkData = false;
-          if((typeof $scope.data.COLUMN_NAME != undefined) && ($scope.data.COLUMN_NAME.length > 0) ) {
-            d3.selectAll("svg").remove();
+          d3.selectAll("svg").remove();
+          if(typeof $scope.data.COLUMN_NAME !== "undefined" ) {
+            
             $scope.vizImplemented = false;
             buildChart(data);
+          } else {
+            $scope.vizImplemented = true;
           }
           
-
           // // save for later, it works
           // // $scope.data = $.csv.
           // $scope.responseData = $.csv.toObjects(response.data);
@@ -202,13 +220,13 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
   //         });
   // }
 
-  $scope.tableColumns = [];
-  function getColumns(object){
-    $scope.tableColumns = [];
-    Object.keys(object).forEach(function(key) {
-            $scope.tableColumns.push(key);
-    });   
-  }
+  // $scope.tableColumns = [];
+  // function getColumns(object){
+  //   $scope.tableColumns = [];
+  //   Object.keys(object).forEach(function(key) {
+  //           $scope.tableColumns.push(key);
+  //   });   
+  // }
 
   // visualization
   function renderGraph(){
