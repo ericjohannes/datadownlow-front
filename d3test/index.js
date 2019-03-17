@@ -72,7 +72,7 @@ app.controller('main', function($scope, $http) {
 
         const yAxis = d3.axisLeft(yScale);
         
-        const svg = d3.select("body")
+        const svg = d3.select("#chart")
                       .append("svg")
                       .attr("width", w)
                       .attr("height", h);

@@ -48,6 +48,7 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
   initArrays();
 
   $scope.viewToggles = { what:true,
+                         sum: true,
                          where:false,
                          who:false,
                          when:false,
@@ -170,6 +171,12 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
           $compile(angular.element('#main-table'))($scope)
 
           $scope.checkData = false;
+          if((typeof $scope.data.COLUMN_NAME != undefined) && ($scope.data.COLUMN_NAME.length > 0) ) {
+            d3.selectAll("svg").remove();
+            $scope.vizImplemented = false;
+            buildChart(data);
+          }
+          
 
           // // save for later, it works
           // // $scope.data = $.csv.
@@ -200,14 +207,118 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
     $scope.tableColumns = [];
     Object.keys(object).forEach(function(key) {
             $scope.tableColumns.push(key);
-    });
-    // console.log($scope.tableColumns)
-    
+    });   
   }
 
-  // $scope.testFunction = function (){
-  //   console.log('repeat done');
-  // }
+  // visualization
+  function renderGraph(){
+        $http({
+            method: "POST",
+            url: $scope.fileName
+        }).then(function(response) {
+            $scope.testdata = $.csv.toObjects(response.data);
+            console.log($scope.testdata);
+
+            buildChart();
+        });
+    }
+
+    function ObjectLength( object ) {
+        var length = 0;
+        for( var key in object ) {
+            if( object.hasOwnProperty(key) ) {
+                ++length;
+            }
+        }
+        return length;
+    };
+
+
+    function getLabel(object){
+        for (var key in object[0]){
+            if(key == 'COUNT'){
+                continue;
+            } else {
+                return key;
+            }
+        }
+    }
+
+    function buildChart(data){
+        const w = 800;
+        const h = 500;
+
+        const padding = 60;
+        // width of space around bars, will be a minimum, can 
+        // be up to 1 px more because of floor lower
+        const barPadding = 5;
+
+        // get number of elements in object
+        const objLen = ObjectLength(data);
+
+        // determine width of bars and bars plus space
+        const barSpace = Math.floor((w - (padding + barPadding) ) / objLen);
+        const barWidth = barSpace - barPadding;
+
+        // get label of x axis
+        const xLabel = getLabel(data);
+
+        // set label of y axis
+        const yLabel = "Count of Incidents";
+      
+        var ymax = d3.max(data, function(d) { return +d.COUNT;});
+
+        const yScale = d3.scaleLinear() 
+                         .domain([0, ymax])
+                         .range([h - padding, padding ]);
+
+        const yAxis = d3.axisLeft(yScale);
+        
+        const svg = d3.select("#chart")
+                      .append("svg")
+                      .attr("width", w)
+                      .attr("height", h);
+
+        // new stuff
+        var xScale = d3.scaleBand()
+          .range([padding, w])
+          .domain(data.map(function(d) { return d[xLabel]; }))
+          .padding(0.1);
+
+        svg.selectAll("rect")
+          .data(data)
+          .enter()
+          .append("rect")
+          .attr("x", function (d){ return xScale(d[xLabel]); })
+          .attr("y", (d, i) => yScale(d.COUNT) )
+          .attr("width", xScale.bandwidth())
+          .attr("height", (d, i) => h - yScale(d.COUNT) - 60)
+          .attr("fill", "navy")
+          .append("title")
+          .text((d) => d[xLabel]);
+
+        svg.append("g")
+          .attr("transform", "translate(" + xScale.bandwidth()/2 + " ," + (h - padding) + ")")
+          .call(d3.axisBottom(xScale))
+          .selectAll("text")  
+          .attr("dx", "-1.0304em")
+          .attr("dy", "0.88em")
+          .style("text-anchor", "start")
+          .attr("transform", "rotate(45)" );
+
+        // add y axis
+        svg.append("g")
+           .attr("transform", "translate(" + padding + ",0)")
+           .call(yAxis);
+
+        // text label for the chart
+        svg.append("text")             
+            .attr("x",padding + (w-padding)/2)
+            .attr("y",20)
+            .style("font-size", "16px") 
+            .style("text-anchor", "middle")
+            .text("Number of Hate Crimes by " + xLabel);   
+    }
 
       
 

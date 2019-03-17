@@ -16,6 +16,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.20.0/select.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.7.6/angular-sanitize.js"></script>
     <script src="https://rawgithub.com/l-lin/angular-datatables/v0.6.1/dist/angular-datatables.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
 
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
@@ -32,9 +33,6 @@
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css" rel="stylesheet">
 
-
-
-    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <!-- jQuery library -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -72,19 +70,19 @@
 <body>
     <div ng-cloak="" class="tabsdemoDynamicHeight" ng-app="app" ng-controller="main"> 
         <div class="container">
-            <h2 >Download FBI Data on Bias Crimes</h2>
+            <h2 >Download FBI Data on Hate Crimes</h2>
             <md-content>
                 <md-tabs md-dynamic-height="" md-border-bottom="">
                     <md-tab label="search">
                       <md-content class="md-padding">
 <!--                         <h1 class="md-display-2">Search Data By</h1>-->
                              <h2 class="section-title">
-                                Summarize by 
+                                Summarize 
                                 <i class="toggle-open fa {{viewToggles.sum? 'fa-minus' : 'fa-plus'}}" 
                                    aria-hidden="true" 
                                    ng-click="toggleOpen('sum')"></i>
                             </h2>
-                            <div id="su " class="section" ng-show=viewToggles.what>
+                            <div id="su " class="section" ng-show=viewToggles.sum>
                                 <div class="add-param">
                                     <h3>Column Name</h3>
                                     <h4 ng-show="data.COLUMN_NAME"> 
@@ -321,11 +319,7 @@
 
                         </md-content>
                     </md-tab>
-                    <md-tab label="analyze">
-                      <md-content class="md-padding">
-                        <h1 class="md-display-2">Summarize Data By</h1>
-                      </md-content>
-                    </md-tab>
+                  
                     <md-tab label="table" ng-disabled="checkData">
                         <md-content class="md-padding">
                             <h1 ng-show="showTable"><a download="data.csv" ng-href="{{ fileName }}">Download Data</a></h1>
@@ -427,8 +421,7 @@
                     </md-tab>
                     <md-tab label="viz" ng-disabled="vizImplemented">
                         <md-content class="md-padding">
-                            <h1 class="md-display-2">Vizualize Data</h1>
-                            <p>Working on it</p>
+                            <div id="chart"></div>
                         </md-content>
                     </md-tab>
                     <md-tab label="about">
