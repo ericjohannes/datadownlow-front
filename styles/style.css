@@ -36,3 +36,35 @@ div.controls button.btn {
 div.controls button.btn:first-child {
     margin-left: 5px;
 }
+
+div.two-inputs input {
+    display: block;
+}
+div.two-inputs label {
+    width: 45%;
+}
+
+div.section > * {
+    padding: 10px;
+
+}
+div.section p, li{
+    font-size: 2rem;
+}
+
+div.explainer {
+    background: lightgray;
+    margin: 0.5px 4px 2px 2px;
+    border-radius: 0px 0px 10px 10px;
+    box-shadow: 2px 2px 1px grey;
+}
+div.explainer p, div.explainer-island p,  {
+    font-size: 1.5rem;
+}
+div.explainer-island {
+    background: lightgray;
+    margin: 2px 2px 2px 2px;
+    border-radius: 10px 10px 10px 10px;
+    padding: 10px;
+    box-shadow: 2px 2px 1px grey;
+}

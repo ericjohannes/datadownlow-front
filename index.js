@@ -57,14 +57,28 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
 
   $scope.viewToggles = { what:true,
                          sum: true,
+                         warn: true,
                          where:false,
                          who:false,
                          when:false,
-                         why: false
+                         why: false,
+                         test:true,
+                         works: false,
+                         details: false,
                        };
+
+ $scope.explain = { sum: false,
+                    where:false,
+                    who:false,
+                    dates: false,
+                  }
 
   $scope.toggleOpen = function(section) {
     $scope.viewToggles[section] = !$scope.viewToggles[section];
+  }
+
+  $scope.toggleExplain = function(section) {
+    $scope.explain[section] = !$scope.explain[section];
   }
 
   // adds from buff to data
