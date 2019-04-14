@@ -68,3 +68,7 @@ div.explainer-island {
     padding: 10px;
     box-shadow: 2px 2px 1px grey;
 }
+
+span.filter-details {
+    font-size: .75em;
+}

@@ -126,7 +126,7 @@
                                 </i>
                             </h2>
                             <div id="works" class="section" ng-show=viewToggles.works>
-                                <p>This app lets you search, analyze and visualize hate crime data from the FBI. Each input field on the "Search" page is a column. Search the database for records matching values you select from "Basics," "Where" and "When"
+                                <p>This app lets you search, analyze and visualize hate crime data from the FBI. Each input field on the "Search" page is a column. Search the database for records matching values you select from "Basics," "Where" and "Who"
                                 </p>
                                 <p>
                                 Add a parameter: Select a parameter  and then click "Set" or "Add" too add it to the list of parameters. If you don't "Set" or "Add," the parameter won't be part of the query.
@@ -155,7 +155,7 @@
 
                                 <h3>Function 2: Search</h3>
                                 <p>Find records that fit any criteria you want. </p>
-                                <p>Each input under "Basics," "Where" and "When" represents a column in the data set.
+                                <p>Each input under "Basics," "Where" and "Who" represents a column in the data set.
                                 </p>
                                 <div>
                                     <ol>
@@ -195,50 +195,12 @@
                     </md-tab>
                     <md-tab label="search">
                       <md-content class="md-padding">
-                             <h2 class="section-title">
-                                Summarize 
-                                <i class=" {{explain.sum? 'fas' : 'far'}} fa-question-circle" ng-click="toggleExplain('sum')">
-                                    
-                                </i>
-                                <i class="toggle-open fa {{viewToggles.sum? 'fa-minus' : 'fa-plus'}}" 
-                                   aria-hidden="true" 
-                                   ng-click="toggleOpen('sum')"></i>
-                            </h2>
-                            <div id="sum" class="section" ng-show=viewToggles.sum>
-                                <div class="explainer" ng-show=explain.sum>
-                                    <p>
-                                    Choose a value here to summarize data. (The app also will search the 
-                                    database for records matching the parameters below.) Then, the
-                                    app counts the number of records that match each value of the 
-                                    column you're summarizing by and returns the results under 
-                                    "Table" and "Viz."</p>
-                                    <p>
-                                    Leave "Column Name" unset if you want full records and not a summary.
-                                    </p>
-                                </div>
-                                <div class="add-param">
-                                    <h3>Column Name</h3>
-                                    <h4 ng-show="data.COLUMN_NAME"> 
-                                        {{data.COLUMN_NAME}}
-                                    <h4>
-                                    <ui-select ng-model="buff.COLUMN_NAME">
-                                        <ui-select-match>
-                                            <span ng-bind="$select.selected"></span>
-                                        </ui-select-match>
-                                        <ui-select-choices repeat="item in (initData.COLUMN_NAME | filter: $select.search) track by $index">
-                                            <span ng-bind="item"></span>
-                                        </ui-select-choices>
-                                    </ui-select>
-                                   
-                                    <button class="btn" ng-click="setParam('COLUMN_NAME')">Set</button>
-                                    <button class="btn" ng-click="unsetParam('COLUMN_NAME')">Clear</button>
-                                </div>
-                            </div>
-                            
-
                             <h2 class="section-title">
-                                Basics 
-                                <i class=" {{explain.basics ? 'fas' : 'far'}} fa-question-circle" ng-click="toggleExplain('basics')"></i>
+                                Basic Filters 
+                                <span class='filter-details'>- Slice out the records you want 
+                                    <i class=" {{explain.basics ? 'fas' : 'far'}} fa-question-circle" ng-click="toggleExplain('basics')"></i>
+                                </span>
+                                
                                 <i class="toggle-open fa {{viewToggles.what? 'fa-minus' : 'fa-plus'}}" 
                                    aria-hidden="true" 
                                    ng-click="toggleOpen('what')"></i>
@@ -311,9 +273,55 @@
 
                                 </div>
                             </div>
+
                             <h2 class="section-title">
-                                Where
-                                <i class=" {{explain.where ? 'fas' : 'far'}} fa-question-circle" ng-click="toggleExplain('where')"></i>
+                                Analyze  
+                                <span class="filter-details">- Group by this column, count records in each group
+                                    <i class=" {{explain.sum? 'fas' : 'far'}} fa-question-circle" ng-click="toggleExplain('sum')"></i>
+                                </span>
+                                <i class="toggle-open fa {{viewToggles.sum? 'fa-minus' : 'fa-plus'}}" 
+                                   aria-hidden="true" 
+                                   ng-click="toggleOpen('sum')"></i>
+                            </h2>
+                            <div id="sum" class="section" ng-show=viewToggles.sum>
+                                <div class="explainer" ng-show=explain.sum>
+                                    <p>
+                                    Choose a value here to summarize data. (The app also will search the 
+                                    database for records matching the parameters below.) Then, the
+                                    app counts the number of records that match each value of the 
+                                    column you're summarizing by and returns the results under 
+                                    "Table" and "Viz."</p>
+                                    <p>
+                                    Leave "Column Name" unset if you want full records and not a summary.
+                                    </p>
+                                </div>
+                                <div class="add-param">
+                                    <h3>Column Name</h3>
+                                    <h4 ng-show="data.COLUMN_NAME"> 
+                                        {{data.COLUMN_NAME}}
+                                    <h4>
+                                    <ui-select ng-model="buff.COLUMN_NAME">
+                                        <ui-select-match>
+                                            <span ng-bind="$select.selected"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in (initData.COLUMN_NAME | filter: $select.search) track by $index">
+                                            <span ng-bind="item"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                   
+                                    <button class="btn" ng-click="setParam('COLUMN_NAME')">Set</button>
+                                    <button class="btn" ng-click="unsetParam('COLUMN_NAME')">Clear</button>
+                                </div>
+                            </div>
+                            
+
+                            
+                            <h2 class="section-title">
+                                Where <span class='filter-details'>
+                                    - Filter on location
+                                    <i class=" {{explain.where ? 'fas' : 'far'}} fa-question-circle" ng-click="toggleExplain('where')"></i>
+                                </span>
+                                
                                 <i class="toggle-open fa {{viewToggles.where? 'fa-minus' : 'fa-plus'}}" 
                                    aria-hidden="true" 
                                    ng-click="toggleOpen('where')"></i>
@@ -413,8 +421,11 @@
                             </div>
                             
                             <h2 class="section-title">
-                                Who
-                                <i class=" {{explain.who ? 'fas' : 'far'}} fa-question-circle" ng-click="toggleExplain('who')"></i>
+                                Who <span class='filter-details'>
+                                    - Filter by people involved
+                                    <i class=" {{explain.who ? 'fas' : 'far'}} fa-question-circle" ng-click="toggleExplain('who')"></i>
+                                </span>
+                                
 
                                 <i class="toggle-open fa {{viewToggles.who? 'fa-minus' : 'fa-plus'}}" 
                                    aria-hidden="true" 
