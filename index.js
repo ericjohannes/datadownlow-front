@@ -100,7 +100,7 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
   }
   $scope.unsetParam = function(type){
     $scope.data[type] = undefined; 
-    console.log('unset');
+    // console.log('unset');
   }
 
   $scope.reset = function(){
@@ -162,7 +162,6 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
     } else {
       $scope.data.type = 'filter';
     }
-    console.log($scope.data);
     
     var postData = JSON.stringify($scope.data);
     $http({
@@ -187,7 +186,7 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
               DTColumnBuilder.newColumn(key).withTitle(key)
             );
           }
-          console.log(dtColumns);
+          // console.log(dtColumns);
           $scope.dtColumns = undefined;
           $scope.dtOptions = undefined;
           // clear any table
@@ -212,6 +211,7 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
             
             $scope.vizImplemented = false;
             buildChart(data);
+            $scope.selectedIndex = 2; // sends user to the table tab
           } else {
             $scope.vizImplemented = true;
           }
@@ -249,17 +249,17 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
   // }
 
   // visualization
-  function renderGraph(){
-        $http({
-            method: "POST",
-            url: $scope.fileName
-        }).then(function(response) {
-            $scope.testdata = $.csv.toObjects(response.data);
-            console.log($scope.testdata);
+  // function renderGraph(){
+  //       $http({
+  //           method: "POST",
+  //           url: $scope.fileName
+  //       }).then(function(response) {
+  //           $scope.testdata = $.csv.toObjects(response.data);
+  //           // console.log($scope.testdata);
 
-            buildChart();
-        });
-    }
+  //           buildChart();
+  //       });
+  //   }
 
     function ObjectLength( object ) {
         var length = 0;
@@ -281,6 +281,14 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
             }
         }
     }
+
+    //set a random color
+    function getRandomInt(max) {
+      return Math.floor(Math.random() * Math.floor(max));
+    }
+
+    var color = d3.scaleOrdinal(d3.schemeCategory10);
+
 
     function buildChart(data){
         const w = 800;
@@ -323,6 +331,7 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
           .domain(data.map(function(d) { return d[xLabel]; }))
           .padding(0.1);
 
+
         svg.selectAll("rect")
           .data(data)
           .enter()
@@ -331,7 +340,7 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
           .attr("y", (d, i) => yScale(d.COUNT) )
           .attr("width", xScale.bandwidth())
           .attr("height", (d, i) => h - yScale(d.COUNT) - 60)
-          .attr("fill", "navy")
+          .attr("fill", color(getRandomInt(9)))
           .append("title")
           .text((d) => d[xLabel]);
 
