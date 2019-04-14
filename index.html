@@ -76,6 +76,21 @@
                     <md-tab label="about">
                         <md-content class="md-padding">
                             <h2 class="section-title">
+                                Introduction 
+                                <i class="toggle-open fa {{viewToggles.warn? 'fa-minus' : 'fa-plus'}}" 
+                                    aria-hidden="true" 
+                                    ng-click="toggleOpen('intro')">
+                                </i>
+                            </h2>
+                            <div id="warning" class="section" ng-show=viewToggles.intro>
+                                <p>This tool lets you search and download reports of hate crimes. The reports are from law enforcement agencies around the U.S. who sent the data to the FBI's Uniform Crime Reporting program. 
+                                <p><a href="http://ericjblom.com">Eric Blom</a> created this app and downloaded the dataset from the FBI.</p>
+                                <p>The app uses includes about 187,000 records from 1991 to 2016. Each record is one reported hate crime and contains 28 fields related to the location, date, people involved and type of crime as police reported them.</p>
+                                <p>The app lets users filter records by many of those fields and download a slice of data. It also lets users group the data, or any slice of it, by one column and count the values in each group. Users can download a table of the results or see them as a chart.</p>
+                                <p>Please heed the <a href="#warnings">warning</a> below, and note this app is still under development</p>
+                            </div>
+
+                            <h2 id="warnings" class="section-title">
                                 Warning 
                                 <i class="toggle-open fa {{viewToggles.warn? 'fa-minus' : 'fa-plus'}}" 
                                     aria-hidden="true" 
@@ -83,7 +98,7 @@
                                 </i>
                             </h2>
                             <div id="warning" class="section" ng-show=viewToggles.warn>
-                                <p>Want to know how many hate crimes happened in certain place at a certain time? This data can't answer that. But it can be a source of insight for the public. It canbe the beginning of a story for a journalists but never the whole story.
+                                <p>This data cannot tell you how many hate crimes happened at a certain place in a certain time frame. But it can be a source of insight for the public. It canbe the beginning of a story for a journalists but never the whole story.
                                 </p>
                                 <p>The records here likely do not cover all hate crimes. As a result, there are major limits to conclusions you can draw from them. 
                                 </p>
@@ -118,7 +133,7 @@
                                 </div>
                             </div>
                             <h2 class="section-title">
-                                How This Work 
+                                How This Works
                                 <i class="toggle-open fa {{viewToggles.works? 'fa-minus' : 'fa-plus'}}" 
                                     aria-hidden="true" 
                                     ng-click="toggleOpen('works')">
@@ -182,10 +197,9 @@
                                 </i>
                             </h2>
                             <div id="details" class="section" ng-show=viewToggles.details>
-                                <p>This tool lets you search and download reports of hate crimes, or crimes motivated by a bias. The reports are from law enforcement agencies around the U.S. who sent the data to the FBI.</p>
-                                <p>It is still under development.</p>
+                                
                                 <p>The data came from <a href="https://crime-data-explorer.fr.cloud.gov/downloads-and-docs">the FBI</a>. 
-                                <p>This project set up a sever to host the data and to let users search and filter it with an online interface.</p>
+                                <p>This project set up a server to host the data and to let users search and filter it with an online interface.</p>
                            
                                 <p>All the column names and options for those values come directly from the data set. This app presents them without modification.</p>
                                 <p>There are junk values in some records. In the interest of transparency, the app has not sought to clean the data. But as a result, have caution when using the data and investigate any odd values you see.</p>
