@@ -55,7 +55,7 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
   }
   initArrays();
 
-  $scope.viewToggles = { what:true,
+  $scope.viewToggles = { basics:true,
                          sum: true,
                          warn: true,
                          where:false,
@@ -65,12 +65,15 @@ app.controller('main', function($scope, $compile, $http, DTOptionsBuilder, DTCol
                          test:true,
                          works: false,
                          details: false,
+                         intro:true,
+                         what: false,
                        };
 
  $scope.explain = { sum: false,
                     where:false,
                     who:false,
                     dates: false,
+                    what: false,
                   }
 
   $scope.toggleOpen = function(section) {

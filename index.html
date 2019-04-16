@@ -217,9 +217,9 @@
                                 
                                 <i class="toggle-open fa {{viewToggles.what? 'fa-minus' : 'fa-plus'}}" 
                                    aria-hidden="true" 
-                                   ng-click="toggleOpen('what')"></i>
+                                   ng-click="toggleOpen('basics')"></i>
                             </h2>
-                            <div id="what" class="section" ng-show=viewToggles.what>
+                            <div id="what" class="section" ng-show=viewToggles.basics>
                                 <div class="explainer" ng-show=explain.basics>
                                     <p>
                                     Search for records that correspond to criteria you choose. If you choose a value for any input field, the search will only return records that have the chosen value for that field.</p> 
@@ -244,22 +244,39 @@
                                     <button class="btn" ng-click="clearParam('BIAS_DESC')">Clear</button>
                                 </div>
                                 <div class="add-param">
-                                    <h3>Offense Name</h3>
-                                    <ul ng-show="data.OFFENSE_NAME.length > 0"> 
-                                        <li ng-repeat="item in data.OFFENSE_NAME track by $index"> {{item}}</li>
+                                    <h3>State Name</h3>
+                                    <ul ng-show="data.STATE_NAME.length > 0"> 
+                                        <li ng-repeat="item in data.STATE_NAME track by $index"> {{item}} </li>
                                     </ul>
-                                    <ui-select ng-model="buff.OFFENSE_NAME">
+                                    <ui-select ng-model="buff.STATE_NAME">
                                         <ui-select-match>
                                             <span ng-bind="$select.selected"></span>
                                         </ui-select-match>
-                                        <ui-select-choices repeat="item in (initData.OFFENSE_NAME | filter: $select.search) track by $index">
+                                        <ui-select-choices repeat="item in (initData.STATE_NAME | filter: $select.search) track by $index">
                                             <span ng-bind="item"></span>
                                         </ui-select-choices>
                                     </ui-select>
-                
-                                    <button class="btn" ng-click="addParam('OFFENSE_NAME')">Add</button>
-                                    <button class="btn" ng-click="clearParam('OFFENSE_NAME')">Clear</button>
+
+                                    <button class="btn" ng-click="addParam('STATE_NAME')">Add</button>
+                                    <button class="btn" ng-click="clearParam('STATE_NAME')">Clear</button>
                                 </div>
+                                <div class="add-param">
+                                    <h3>Law Enforcement Agency</h3>
+                                    <ul ng-show="data.PUB_AGENCY_NAME.length > 0"> 
+                                        <li ng-repeat="item in data.PUB_AGENCY_NAME track by $index"> {{item}} </li>
+                                    </ul>
+                                    <ui-select ng-model="buff.PUB_AGENCY_NAME">
+                                        <ui-select-match>
+                                            <span ng-bind="$select.selected"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in (initData.PUB_AGENCY_NAME | filter: $select.search) track by $index">
+                                            <span ng-bind="item"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <button class="btn" ng-click="addParam('PUB_AGENCY_NAME')">Add</button>
+                                    <button class="btn" ng-click="clearParam('PUB_AGENCY_NAME')">Clear</button>
+                                </div>
+                             
                                 <div class="add-param">
                                     <h3>Incident Date
                                         <i class=" {{explain.dates ? 'fas' : 'far'}} fa-question-circle"
@@ -273,16 +290,18 @@
                                    
                                 </div>
                                     <div class="two-inputs">
-                                        <label><h4>After {{data.START_DATE}}</h4>
+                                        <label><h4>After {{data.START_DATE.toLocaleDateString()}}</h4>
                                             <input type="date" ng-model="buff.START_DATE">
-                                        </label>
-                                        <button class="btn" ng-click="data.START_DATE = buff.START_DATE">Add</button>
+                                             <button class="btn" ng-click="data.START_DATE = buff.START_DATE">Add</button>
                                         <button class="btn" ng-click="data.START_DATE = ''">Clear</button>
-                                        <label><h4>Before {{data.END_DATE}}</h4>
-                                            <input type="date" ng-model="buff.END_DATE">
                                         </label>
-                                        <button class="btn" ng-click="data.END_DATE = buff.END_DATE">Add</button>
+                                       
+                                        <label><h4>Before {{data.END_DATE.toLocaleDateString()}}</h4>
+                                            <input type="date" ng-model="buff.END_DATE">
+                                             <button class="btn" ng-click="data.END_DATE = buff.END_DATE">Add</button>
                                         <button class="btn" ng-click="data.END_DATE = ''">Clear</button>
+                                        </label>
+                                       
                                     </div>
 
                                 </div>
@@ -345,7 +364,7 @@
                                     <p>Fields work just like "Basics" but are oriented toward where the incident happened. "Agency Name" field is slow to work, but contains a type-ahead list of individual agencies.</p>
                                    
                                 </div>
-                                <div class="add-param">
+                                <!-- <div class="add-param">
                                     <h3>State Name</h3>
                                     <ul ng-show="data.STATE_NAME.length > 0"> 
                                         <li ng-repeat="item in data.STATE_NAME track by $index"> {{item}} </li>
@@ -363,7 +382,7 @@
                                     <button class="btn" ng-click="clearParam('STATE_NAME')">Clear</button>
                                 </div>
                                 <div class="add-param">
-                                    <h3>Agency Name</h3>
+                                    <h3>Law Enforcement Agency</h3>
                                     <ul ng-show="data.PUB_AGENCY_NAME.length > 0"> 
                                         <li ng-repeat="item in data.PUB_AGENCY_NAME track by $index"> {{item}} </li>
                                     </ul>
@@ -377,7 +396,7 @@
                                     </ui-select>
                                     <button class="btn" ng-click="addParam('PUB_AGENCY_NAME')">Add</button>
                                     <button class="btn" ng-click="clearParam('PUB_AGENCY_NAME')">Clear</button>
-                                </div>
+                                </div> -->
                                 <div class="add-param">
                                     <h3>Location Name</h3>
                                     <ul ng-show="data.LOCATION_NAME.length > 0"> 
@@ -506,7 +525,37 @@
                                     <button class="btn" ng-click="clearParam('OFFENDER_ETHNICITY')">Clear</button>
                                 </div>
                             </div>
-                            
+                            <div id="what" class="section" ng-show=viewToggles.what>
+                                <div class="explainer" ng-show=explain.what>
+                                    <p>Fields work just like "Basics" but are contain information about the type of incident</p>           
+                                </div>
+                                <h2 class="section-title">
+                                    What <span class='filter-details'>
+                                        - Filter by type of crime
+                                        <i class=" {{explain.what ? 'fas' : 'far'}} fa-question-circle" ng-click="toggleExplain('what')"></i>
+                                    </span>
+                                    <i class="toggle-open fa {{viewToggles.what? 'fa-minus' : 'fa-plus'}}" 
+                                       aria-hidden="true" 
+                                       ng-click="toggleOpen('what')"></i>
+                                </h2>
+                               <div class="add-param">
+                                    <h3>Offense Name</h3>
+                                    <ul ng-show="data.OFFENSE_NAME.length > 0"> 
+                                        <li ng-repeat="item in data.OFFENSE_NAME track by $index"> {{item}}</li>
+                                    </ul>
+                                    <ui-select ng-model="buff.OFFENSE_NAME">
+                                        <ui-select-match>
+                                            <span ng-bind="$select.selected"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in (initData.OFFENSE_NAME | filter: $select.search) track by $index">
+                                            <span ng-bind="item"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                
+                                    <button class="btn" ng-click="addParam('OFFENSE_NAME')">Add</button>
+                                    <button class="btn" ng-click="clearParam('OFFENSE_NAME')">Clear</button>
+                                </div>
+                            </div>
 
                             
 
